@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import MonthlyEarning from '../../../views/MonthlyEarning/MonthlyEarning';
-import axios from 'axios';
-
-
-const mockEarnings = [
-    { month: 'January', totalEarnings: 5000 },
-    { month: 'February', totalEarnings: 4500 },
-    { month: 'March', totalEarnings: 6000 },
-];
+// fix part
+import { fetchUserData } from './path/to/your/api';
 
 const EarnMonthPage = () => {
     const [earnings, setEarnings] = useState([]);
-
-    useEffect(() => {
-        
-        setEarnings(mockEarnings);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+useEffect(() => {
+        const getEarningsData = async () => {
+            try {
+                const data = await fetchUserData();
+                setEarnings(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+    getEarningsData();
     }, []);
+ if (loading) {
+        return <div>Loading...</div>; // Hoặc có thể là một loading spinner
+    }
 
+    if (error) {
+        return <div>Error: {error}</div>; // Thông báo lỗi nếu có
+    }
     return <MonthlyEarning data={earnings} />;
 };
 
