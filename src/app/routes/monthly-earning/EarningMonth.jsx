@@ -21,11 +21,11 @@ useEffect(() => {
     getEarningsData();
     }, []);
  if (loading) {
-        return <div>Loading...</div>; // Hoặc có thể là một loading spinner
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>; // Thông báo lỗi nếu có
+        return <div>Error: {error}</div>; 
     }
     return <MonthlyEarning data={earnings} />;
 };
