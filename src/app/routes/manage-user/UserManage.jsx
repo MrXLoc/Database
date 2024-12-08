@@ -16,13 +16,13 @@ const UserManagePage = () => {
         
         const fetchData = async () => {
             try {
-                const userData = await fetchUsersData(); // Gọi API lấy dữ liệu người dùng
+                const userData = await fetchUsersData(); 
                 setUsers(userData);
             } catch (err) {
                 console.error('Error fetching user data:', err);
-                setError('Không thể tải dữ liệu người dùng. Vui lòng thử lại sau!');
+                setError('Please try again later!');
             } finally {
-                setLoading(false); // Dừng trạng thái loading
+                setLoading(false); 
             }
         };
 
