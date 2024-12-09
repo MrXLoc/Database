@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import './ManageUser.css';
+import UserModal from './usernodal.jsx'; // Import modal component
 
 const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
-    const [selectedUser, setSelectedUser] = useState(null); // State để lưu thông tin người dùng
-    const [showModal, setShowModal] = useState(false); // State để quản lý hiển thị modal
-    const [isEditing, setIsEditing] = useState(false); // State để quản lý chế độ sửa
+    const [selectedUser, setSelectedUser] = useState(null); 
+    const [showModal, setShowModal] = useState(false); 
+    const [showDetailsModal, setShowDetailsModal] = useState(false); 
+    const [isEditing, setIsEditing] = useState(false); 
 
     const handleDetailsClick = (user) => {
-        const url = `https://f1d0-14-191-102-163.ngrok-free.app/api/user/${user.username}`;
+        const url = `https://f1d0-14-191-102-163.ngrok-free.app/api/user/account/${user.username}`;
     
         fetch(url, {
             method: "get",
@@ -24,15 +26,15 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
             .then((data) => {
                 console.log('Fetched user details:', data); 
                 setSelectedUser(data); 
-                setShowModal(true);    
+                setShowDetailsModal(true);    
             })
             .catch((err) => console.log('Error fetching user details:', err));
     };
-    
 
     const handleCloseModal = () => {
         setSelectedUser(null);
         setShowModal(false);
+        setShowDetailsModal(false);
         setIsEditing(false);
     };
 
@@ -69,131 +71,67 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(data)?(
-                        data.map((user) => (
-                            <tr key={user.username}>
-                                <td>{user.username}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>{user.phoneNumber}</td>
-                                <td>{user.accountStatus}</td>
-                                <td>{user.startDate}</td>
-                                <td>
-                                    <button className="details-button" onClick={() => handleDetailsClick(user)}>Details</button>
-                                    <button className="edit-button" onClick={() => { setSelectedUser(user); setShowModal(true); setIsEditing(true); }}>Edit</button>
-                                    <button className="delete-button" onClick={() => onDelete(user.username)}>Delete</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr><td colSpan="6">No valid data available.</td></tr>
-                    )}
+                        {Array.isArray(data) ? (
+                            data.map((user) => (
+                                <tr key={user.username}>
+                                    <td>{user.username}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phoneNumber}</td>
+                                    <td>{user.accountStatus}</td>
+                                    <td>{user.startDate}</td>
+                                    <td>
+                                        <button className="details-button" onClick={() => handleDetailsClick(user)}>Details</button>
+                                        <button className="edit-button" onClick={() => { setSelectedUser(user); setShowModal(true); setIsEditing(true); }}>Edit</button>
+                                        <button className="delete-button" onClick={() => onDelete(user.username)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colSpan="6">No valid data available.</td></tr>
+                        )}
                     </tbody>
                 </table>
             )}
 
-            {/* Modal */}
+            {/* Use the modal component */}
             {showModal && selectedUser && (
+                <UserModal 
+                    user={selectedUser} 
+                    isEditing={isEditing} 
+                    onClose={handleCloseModal} 
+                    onSave={handleSave} 
+                    onInputChange={handleInputChange} 
+                />
+            )}
+
+            {/* Details Modal */}
+            {showDetailsModal && selectedUser && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>{isEditing ? 'Edit User' : 'Add User'}</h2>
-                        <input
-                            type="text"
-                            name="username"
-                            value={selectedUser.username}
-                            onChange={handleInputChange}
-                            placeholder="Username"
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            value={selectedUser.email}
-                            onChange={handleInputChange}
-                            placeholder="Email"
-                        />
-                        <input
-                            type="text"
-                            name="phoneNumber"
-                            value={selectedUser.phoneNumber}
-                            onChange={handleInputChange}
-                            placeholder="Phone Number"
-                        />
-                        <input
-                            type="text"
-                            name="accountStatus"
-                            value={selectedUser.accountStatus}
-                            onChange={handleInputChange}
-                            placeholder="Account Status"
-                        />
-                        <input
-                            type="text"
-                            name="familyName"
-                            value={selectedUser.familyName}
-                            onChange={handleInputChange}
-                            placeholder="Family Name"
-                        />
-                        <input
-                            type="text"
-                            name="firstName"
-                            value={selectedUser.firstName}
-                            onChange={handleInputChange}
-                            placeholder="First Name"
-                        />
-                        <input
-                            type="text"
-                            name="address"
-                            value={selectedUser.address}
-                            onChange={handleInputChange}
-                            placeholder="Address"
-                        />
-                        <input
-                            type="date"
-                            name="startDate"
-                            value={selectedUser.startDate}
-                            onChange={handleInputChange}
-                            placeholder="Start Date"
-                        />
+                        <h2>User Details</h2>
+                        <p><strong>Username:</strong> {selectedUser.username}</p>
+                        <p><strong>Email:</strong> {selectedUser.email}</p>
+                        <p><strong>Phone Number:</strong> {selectedUser.phoneNumber}</p>
+                        <p><strong>Account Status:</strong> {selectedUser.accountStatus}</p>
+                        <p><strong>Family Name:</strong> {selectedUser.familyName}</p>
+                        <p><strong>First Name:</strong> {selectedUser.firstName}</p>
+                        <p><strong>Address:</strong> {selectedUser.address}</p>
+                        <p><strong>Start Date:</strong> {selectedUser.startDate}</p>
 
                         {/* Display details based on user role */}
                         {selectedUser.totalTrips !== undefined ? (
                             <>
-                                <input
-                                    type="number"
-                                    name="totalTrips"
-                                    value={selectedUser.totalTrips}
-                                    onChange={handleInputChange}
-                                    placeholder="Total Trips"
-                                />
-                                <input
-                                    type="number"
-                                    name="totalAmountPaid"
-                                    value={selectedUser.totalAmountPaid}
-                                    onChange={handleInputChange}
-                                    placeholder="Total Amount Paid"
-                                />
+                                <p><strong>Total Trips:</strong> {selectedUser.totalTrips}</p>
+                                <p><strong>Total Amount Paid:</strong> {selectedUser.totalAmountPaid}</p>
                             </>
                         ) : (
                             <>
-                                <input
-                                    type="number"
-                                    name="totalDriverTrips"
-                                    value={selectedUser.totalDriverTrips}
-                                    onChange={handleInputChange}
-                                    placeholder="Total Driver Trips"
-                                />
-                                <input
-                                    type="number"
-                                    name="totalAmountReceived"
-                                    value={selectedUser.totalAmountReceived}
-                                    onChange={handleInputChange}
-                                    placeholder="Total Amount Received"
-                                />
+                                <p><strong>Total Driver Trips:</strong> {selectedUser.totalDriverTrips}</p>
+                                <p><strong>Total Amount Received:</strong> {selectedUser.totalAmountReceived}</p>
                             </>
                         )}
 
-                        <button className="save-button" onClick={handleSave}>
-                            {isEditing ? 'Save' : 'Add'}
-                        </button>
                         <button className="close-button" onClick={handleCloseModal}>Close</button>
                     </div>
                 </div>
