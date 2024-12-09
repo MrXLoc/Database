@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import './ManageUser.css';
 
 const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
-    const [selectedUser, setSelectedUser] = useState(null); // State để lưu thông tin người dùng
-    const [showModal, setShowModal] = useState(false); // State để quản lý hiển thị modal
-    const [isEditing, setIsEditing] = useState(false); // State để quản lý chế độ sửa
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [showModal, setShowModal] = useState(false); 
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleDetailsClick = (user) => {
-        const url = `https://f1d0-14-191-102-163.ngrok-free.app/api/user/${user.username}`;
+        const url = `https://f1d0-14-191-102-163.ngrok-free.app/api/user/account/${user.username}`;
     
         fetch(url, {
             method: "get",

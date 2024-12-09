@@ -1,36 +1,36 @@
-/* Modal overlay (background mờ) */
+
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Màu nền đen mờ */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* Modal content (hộp hiển thị thông tin) */
+
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 400px; /* Chiều rộng cố định */
-  max-width: 90%; /* Responsive */
+  width: 400px;
+  max-width: 90%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: left;
 }
 
-/* Tiêu đề modal */
+
 .modal-content h2 {
   margin-top: 0;
   font-size: 24px;
   color: #333;
 }
 
-/* Các input trong modal */
+
 .modal-content input {
   width: 100%;
   margin: 10px 0;
@@ -39,7 +39,7 @@
   border-radius: 4px;
 }
 
-/* Nút lưu và đóng */
+
 .save-button,
 .close-button {
   padding: 10px 20px;
@@ -51,16 +51,16 @@
 }
 
 .save-button {
-  background-color: #28a745; /* Màu xanh */
+  background-color: #28a745;
   color: #fff;
 }
 
 .close-button {
-  background-color: #dc3545; /* Màu đỏ */
+  background-color: #dc3545;
   color: #fff;
 }
 
-/* Thêm hiệu ứng hover cho các nút */
+
 .save-button:hover {
   background-color: #218838;
 }

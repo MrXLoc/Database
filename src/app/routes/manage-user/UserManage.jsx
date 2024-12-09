@@ -26,7 +26,6 @@ const UserManagePage = () => {
 
     const handleAddUser = async (newUser) => {
         try {
-            // Call the API to add a new user using axios
             const response = await axios.post('https://a156-14-191-102-163.ngrok-free.app/api/user/', newUser, {
                 headers: { 'ngrok-skip-browser-warning': '69420' },
             });
