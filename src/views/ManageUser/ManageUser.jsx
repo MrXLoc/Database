@@ -14,6 +14,12 @@ const ManageUser = ({ data = [] }) => {
                             <th>User ID</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Account Status</th>
+                            <th>Start Date</th>
+                            <th>Family Name</th>
+                            <th>First Name</th>
+                            <th>Address</th>
                             <th>Role</th>
                         </tr>
                     </thead>
@@ -23,6 +29,12 @@ const ManageUser = ({ data = [] }) => {
                                 <td>{user.id}</td>
                                 <td>{user.username}</td>
                                 <td>{user.email}</td>
+                                <td>{user.phoneNumber}</td>
+                                <td>{user.accountStatus}</td>
+                                <td>{user.startDate}</td>
+                                <td>{user.familyName}</td>
+                                <td>{user.firstName}</td>
+                                <td>{user.address}</td>
                                 <td>{user.role}</td>
                             </tr>
                         ))}
