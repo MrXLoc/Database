@@ -6,48 +6,66 @@ const UserManagePage = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        // Simulating API call for fetching users
-        setUsers([
-            {
-                id: 1,
-                username: 'johndoe',
-                email: 'johndoe@example.com',
-                phoneNumber: '123-456-7890',
-                accountStatus: 'Active',
-                startDate: '2023-01-15',
-                familyName: 'Doe',
-                firstName: 'John',
-                address: '123 Main St, Springfield, USA',
-                role: 'Admin',
-            },
-            {
-                id: 2,
-                username: 'janedoe',
-                email: 'janedoe@example.com',
-                phoneNumber: '987-654-3210',
-                accountStatus: 'Inactive',
-                startDate: '2022-06-10',
-                familyName: 'Doe',
-                firstName: 'Jane',
-                address: '456 Elm St, Springfield, USA',
-                role: 'Driver',
-            },
-        ]);
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('https://f1d0-14-191-102-163.ngrok-free.app/api/user/', {
+                    method: 'GET',
+                    headers: new Headers({
+                        'ngrok-skip-browser-warning': '69420',
+                    }),
+                });
+                const data = await response.json();
+                setUsers(data);
+            } catch (e) {
+                console.error('Error fetching users:', e);
+            }
+        };
+
+        fetchUsers();
     }, []);
 
-    const handleAddUser = (newUser) => {
-        // Placeholder: Replace with POST API call
-        setUsers([...users, { id: Date.now(), ...newUser }]);
+    const handleAddUser = async (newUser) => {
+        try {
+            // Call the API to add a new user using axios
+            const response = await axios.post('https://a156-14-191-102-163.ngrok-free.app/api/user/', newUser, {
+                headers: { 'ngrok-skip-browser-warning': '69420' },
+            });
+            setUsers([...users, response.data]);
+        } catch (error) {
+            console.error('Error adding user:', error);
+        }
     };
 
-    const handleEditUser = (updatedUser) => {
-        // Placeholder: Replace with PUT API call
-        setUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
+    const handleEditUser = async (updatedUser) => {
+        try {
+            const response = await fetch(`https://a156-14-191-102-163.ngrok-free.app/api/user/${updatedUser.id}`, {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': '69420',
+                }),
+                body: JSON.stringify(updatedUser),
+            });
+            const data = await response.json();
+            setUsers(users.map((user) => (user.id === updatedUser.id ? data : user)));
+        } catch (error) {
+            console.error('Error editing user:', error);
+        }
     };
 
-    const handleDeleteUser = (userId) => {
-        // Placeholder: Replace with DELETE API call
-        setUsers(users.filter((user) => user.id !== userId));
+    const handleDeleteUser = async (userId) => {
+        try {
+            // Call the API to delete the user using fetch
+            await fetch(`https://a156-14-191-102-163.ngrok-free.app/api/user/${userId}`, {
+                method: 'DELETE',
+                headers: new Headers({
+                    'ngrok-skip-browser-warning': '69420',
+                }),
+            });
+            setUsers(users.filter((user) => user.id !== userId));
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
     };
 
     return (
