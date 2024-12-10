@@ -8,7 +8,7 @@ const UserManagePage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('https://ea65-14-191-102-163.ngrok-free.app/api/user/', {
+                const response = await axios.get('https://e921-14-241-225-130.ngrok-free.app/api/user/', {
                     headers: { 'ngrok-skip-browser-warning': '69420' },
                 });
                 setUsers(response.data);
@@ -22,7 +22,7 @@ const UserManagePage = () => {
 
     const handleAddUser = async (newUser) => {
         try {
-            const response = await axios.post('https://ea65-14-191-102-163.ngrok-free.app/api/user/', newUser, {
+            const response = await axios.post('https://e921-14-241-225-130.ngrok-free.app/api/user/create', newUser, {
                 headers: { 'ngrok-skip-browser-warning': '69420' },
             });
             setUsers([...users, response.data]);
@@ -33,7 +33,7 @@ const UserManagePage = () => {
 
     const handleEditUser = async (updatedUser) => {
         try {
-            const response = await axios.put(`https://ea65-14-191-102-163.ngrok-free.app/api/user/${updatedUser.username}`, updatedUser, {
+            const response = await axios.put(`https://e921-14-241-225-130.ngrok-free.app/api/user/${updatedUser.username}`, updatedUser, {
                 headers: { 'ngrok-skip-browser-warning': '69420' },
             });
             setUsers(users.map((user) =>
@@ -46,7 +46,7 @@ const UserManagePage = () => {
 
     const handleDeleteUser = async (username) => {
         try {
-            await axios.delete(`https://ea65-14-191-102-163.ngrok-free.app/api/user/delete/${username}`, {
+            await axios.delete(`https://e921-14-241-225-130.ngrok-free.app/api/user/delete/${username}`, {
                 headers: { 'ngrok-skip-browser-warning': '69420' },
             });
             setUsers(users.filter((user) => user.username !== username));

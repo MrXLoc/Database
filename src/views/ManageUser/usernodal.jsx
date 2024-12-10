@@ -1,107 +1,104 @@
 import React from 'react';
-import './usermodal.css'; 
+
 const UserModal = ({ user, isEditing, onClose, onSave, onInputChange }) => {
+    const roles = ['customer', 'driver']; // Các vai trò có thể chọn
+
     return (
         <div className="modal">
             <div className="modal-content">
                 <h2>{isEditing ? 'Edit User' : 'Add User'}</h2>
-                <input
-                    type="text"
-                    name="username"
-                    value={user.username}
-                    onChange={onInputChange}
-                    placeholder="Username"
-                />
-                <input
-                    type="email"
-                    name="email"
-                    value={user.email}
-                    onChange={onInputChange}
-                    placeholder="Email"
-                />
-                <input
-                    type="text"
-                    name="phoneNumber"
-                    value={user.phoneNumber}
-                    onChange={onInputChange}
-                    placeholder="Phone Number"
-                />
-                <input
-                    type="text"
-                    name="accountStatus"
-                    value={user.accountStatus}
-                    onChange={onInputChange}
-                    placeholder="Account Status"
-                />
-                <input
-                    type="text"
-                    name="familyName"
-                    value={user.familyName}
-                    onChange={onInputChange}
-                    placeholder="Family Name"
-                />
-                <input
-                    type="text"
-                    name="firstName"
-                    value={user.firstName}
-                    onChange={onInputChange}
-                    placeholder="First Name"
-                />
-                <input
-                    type="text"
-                    name="address"
-                    value={user.address}
-                    onChange={onInputChange}
-                    placeholder="Address"
-                />
-                <input
-                    type="date"
-                    name="startDate"
-                    value={user.startDate}
-                    onChange={onInputChange}
-                    placeholder="Start Date"
-                />
-
-                {user.totalTrips !== undefined ? (
-                    <>
+                <form>
+                    <label>
+                        Username:
                         <input
-                            type="number"
-                            name="totalTrips"
-                            value={user.totalTrips}
+                            type="text"
+                            name="username"
+                            value={user.username}
                             onChange={onInputChange}
-                            placeholder="Total Trips"
+                            disabled={isEditing} // Không cho chỉnh sửa username khi Edit
                         />
+                    </label>
+                    <label>
+                        Email:
                         <input
-                            type="number"
-                            name="totalAmountPaid"
-                            value={user.totalAmountPaid}
+                            type="email"
+                            name="email"
+                            value={user.email}
                             onChange={onInputChange}
-                            placeholder="Total Amount Paid"
                         />
-                    </>
-                ) : (
-                    <>
+                    </label>
+                    <label>
+                        Phone Number:
                         <input
-                            type="number"
-                            name="totalDriverTrips"
-                            value={user.totalDriverTrips}
+                            type="text"
+                            name="phoneNumber"
+                            value={user.phoneNumber}
                             onChange={onInputChange}
-                            placeholder="Total Driver Trips"
                         />
+                    </label>
+                    <label>
+                        Account Status:
                         <input
-                            type="number"
-                            name="totalAmountReceived"
-                            value={user.totalAmountReceived}
+                            type="text"
+                            name="accountStatus"
+                            value={user.accountStatus}
                             onChange={onInputChange}
-                            placeholder="Total Amount Received"
                         />
-                    </>
-                )}
-
-                <button className="save-button" onClick={onSave}>
-                    {isEditing ? 'Save' : 'Add'}
-                </button>
-                <button className="close-button" onClick={onClose}>Close</button>
+                    </label>
+                    <label>
+                        Role:
+                        <select
+                            name="role"
+                            value={user.role}
+                            onChange={onInputChange}
+                        >
+                            <option value="" disabled>Select Role</option>
+                            {roles.map((role) => (
+                                <option key={role} value={role}>
+                                    {role}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Family Name:
+                        <input
+                            type="text"
+                            name="familyName"
+                            value={user.familyName}
+                            onChange={onInputChange}
+                        />
+                    </label>
+                    <label>
+                        First Name:
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={user.firstName}
+                            onChange={onInputChange}
+                        />
+                    </label>
+                    <label>
+                        Address:
+                        <input
+                            type="text"
+                            name="address"
+                            value={user.address}
+                            onChange={onInputChange}
+                        />
+                    </label>
+                    <label>
+                        Start Date:
+                        <input
+                            type="date"
+                            name="startDate"
+                            value={user.startDate}
+                            onChange={onInputChange}
+                        />
+                    </label>
+                </form>
+                <button onClick={onSave}>Save</button>
+                <button onClick={onClose}>Cancel</button>
             </div>
         </div>
     );
