@@ -1,23 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import MonthlyEarning from '../../../views/MonthlyEarning/MonthlyEarning';
-import axios from 'axios';
-
-
-const mockEarnings = [
-    { month: 'January', totalEarnings: 5000 },
-    { month: 'February', totalEarnings: 4500 },
-    { month: 'March', totalEarnings: 6000 },
-];
 
 const EarnMonthPage = () => {
-    const [earnings, setEarnings] = useState([]);
+    const [driverId, setDriverId] = useState('');
+    const [month, setMonth] = useState('');
+    const [error, setError] = useState('');
+    const [earnings, setEarnings] = useState(null);
 
-    useEffect(() => {
-        
-        setEarnings(mockEarnings);
-    }, []);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setEarnings(null);
 
-    return <MonthlyEarning data={earnings} />;
+        // Kiểm tra input
+        if (!driverId.trim() || !month.trim()) {
+            setError('Please fill in both fields: Driver ID and Month.');
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `https://ea65-14-191-102-163.ngrok-free.app/calculate-earnings?driverId=${driverId}&month=${month}`,
+                {
+                    method: 'GET',
+                    headers: new Headers({
+                        'ngrok-skip-browser-warning': '69420',
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.text();
+            setEarnings({
+                driverId,
+                month,
+                totalEarnings: parseFloat(data), 
+            });
+        } catch (error) {
+            console.error('Error fetching earnings data:', error);
+            setError('Failed to fetch earnings data. Please try again.');
+        }
+    };
+
+    return (
+        <div className="earn-month-page">
+            <form onSubmit={handleSubmit} className="search-form">
+                <input
+                    type="number"
+                    value={driverId}
+                    onChange={(e) => setDriverId(e.target.value)}
+                    placeholder="Enter Driver ID"
+                />
+                <input
+                    type="number"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                    placeholder="Enter Month (1-12)"
+                />
+                <button type="submit">Submit</button>
+            </form>
+            {error && <p className="error-message">{error}</p>}
+            {earnings && <MonthlyEarning data={[earnings]} />}
+        </div>
+    );
 };
 
 export default EarnMonthPage;

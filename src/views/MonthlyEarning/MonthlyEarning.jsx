@@ -4,28 +4,30 @@ import './MonthlyEarning.css';
 const MonthlyEarning = ({ data = [] }) => {
     return (
         <div className="monthly-earning-container">
-            <h1 className="monthly-earning-title">Monthly Earnings</h1>
             {data.length === 0 ? (
                 <div>No earnings data available.</div>
             ) : (
-                <table className="earning-table">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Total Earnings</th>
-                            <th>Month</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((earning) => (
-                            <tr key={earning.userId}>
-                                <td>{earning.userId}</td>
-                                <td>{earning.totalEarnings}</td>
-                                <td>{earning.month}</td>
+                <>
+                    <h1 className="monthly-earning-title">Monthly Earnings</h1>
+                    <table className="earning-table">
+                        <thead>
+                            <tr>
+                                <th>Driver ID</th>
+                                <th>Month</th>
+                                <th>Total Earnings</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {data.map((earning, index) => (
+                                <tr key={index}>
+                                    <td>{earning.driverId}</td>
+                                    <td>{earning.month}</td>
+                                    <td>{earning.totalEarnings}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
             )}
         </div>
     );

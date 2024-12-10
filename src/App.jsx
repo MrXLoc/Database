@@ -15,7 +15,8 @@ function App ()  {
         <Routes>
           <Route path="/" element={<PageHomePage />} />
           <Route path="/manage-user" element={<UserManagePage />} />
-          <Route path="/trip-details" element={<TripDetailsPage />} />
+          <Route path="/trips/" element={<TripDetailsPage />} />
+          <Route path="/trips/:username" element={<TripDetailsPage />} />
           <Route path="/monthly-earning" element={<EarnMonthPage/>} />
         </Routes>
       </div>

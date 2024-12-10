@@ -1,15 +1,17 @@
 /* MonthlyEarning.css */
 .monthly-earning-container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 50vh;
+    padding: 20px;
+    background-color: #f9f9f9;
 }
 
 .monthly-earning-title {
+    margin: 0 auto;
+    text-align: center;
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 20px;
@@ -20,6 +22,7 @@
     width: 80%;
     max-width: 600px;
     border-collapse: collapse;
+    text-align: center;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -28,7 +31,6 @@
 
 .earning-table th,
 .earning-table td {
-    text-align: left;
     padding: 12px 15px;
     border: 1px solid #ddd;
 }
@@ -40,10 +42,4 @@
 
 .earning-table tr:nth-child(even) {
     background-color: #f2f2f2;
-}
-
-.earning-table tfoot td {
-    font-weight: bold;
-    background-color: #e6f7ff;
-    color: #2c3e50;
 }

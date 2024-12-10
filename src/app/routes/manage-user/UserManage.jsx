@@ -8,16 +8,12 @@ const UserManagePage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('https://f1d0-14-191-102-163.ngrok-free.app/api/user/', {
-                    method: 'GET',
-                    headers: new Headers({
-                        'ngrok-skip-browser-warning': '69420',
-                    }),
+                const response = await axios.get('https://ea65-14-191-102-163.ngrok-free.app/api/user/', {
+                    headers: { 'ngrok-skip-browser-warning': '69420' },
                 });
-                const data = await response.json();
-                setUsers(data);
-            } catch (e) {
-                console.error('Error fetching users:', e);
+                setUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
             }
         };
 
@@ -26,7 +22,7 @@ const UserManagePage = () => {
 
     const handleAddUser = async (newUser) => {
         try {
-            const response = await axios.post('https://a156-14-191-102-163.ngrok-free.app/api/user/', newUser, {
+            const response = await axios.post('https://ea65-14-191-102-163.ngrok-free.app/api/user/', newUser, {
                 headers: { 'ngrok-skip-browser-warning': '69420' },
             });
             setUsers([...users, response.data]);
@@ -37,31 +33,23 @@ const UserManagePage = () => {
 
     const handleEditUser = async (updatedUser) => {
         try {
-            const response = await fetch(`https://a156-14-191-102-163.ngrok-free.app/api/user/${updatedUser.id}`, {
-                method: 'PUT',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'ngrok-skip-browser-warning': '69420',
-                }),
-                body: JSON.stringify(updatedUser),
+            const response = await axios.put(`https://ea65-14-191-102-163.ngrok-free.app/api/user/${updatedUser.username}`, updatedUser, {
+                headers: { 'ngrok-skip-browser-warning': '69420' },
             });
-            const data = await response.json();
-            setUsers(users.map((user) => (user.id === updatedUser.id ? data : user)));
+            setUsers(users.map((user) =>
+                user.username === updatedUser.username ? response.data : user
+            ));
         } catch (error) {
             console.error('Error editing user:', error);
         }
     };
 
-    const handleDeleteUser = async (userId) => {
+    const handleDeleteUser = async (username) => {
         try {
-            // Call the API to delete the user using fetch
-            await fetch(`https://a156-14-191-102-163.ngrok-free.app/api/user/${userId}`, {
-                method: 'DELETE',
-                headers: new Headers({
-                    'ngrok-skip-browser-warning': '69420',
-                }),
+            await axios.delete(`https://ea65-14-191-102-163.ngrok-free.app/api/user/delete/${username}`, {
+                headers: { 'ngrok-skip-browser-warning': '69420' },
             });
-            setUsers(users.filter((user) => user.id !== userId));
+            setUsers(users.filter((user) => user.username !== username));
         } catch (error) {
             console.error('Error deleting user:', error);
         }

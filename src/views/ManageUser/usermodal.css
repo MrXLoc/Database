@@ -1,43 +1,43 @@
-/* Màu chữ tiêu đề trong modal */
+
 .modal-content h2 {
-    color: #333333; /* Màu xám tối cho tiêu đề */
+    color: #333333;
 }
 
-/* Màu chữ cho các nhãn trong modal */
+
 .modal-content input {
-    color: #333333; /* Màu xám tối cho các trường nhập */
+    color: #333333;
 }
 
-/* Màu chữ trong các chi tiết nhập liệu */
+
 .modal-content p {
-    color: #555555; /* Màu xám nhạt cho các đoạn văn bản */
+    color: #555555;
 }
 
-/* Màu chữ cho các nút trong modal */
+
 .save-button {
-    color: #ffffff; /* Màu trắng cho chữ trên nút Lưu */
+    color: #ffffff;
 }
 
 .close-button {
-    color: #ffffff; /* Màu trắng cho chữ trên nút Đóng */
+    color: #ffffff;
 }
 
-/* Màu chữ khi hover trên các nút */
+
 .save-button:hover {
-    color: #ff6347; /* Màu cam khi hover nút Lưu */
+    color: #ff6347;
 }
 
 .close-button:hover {
-    color: #ff6347; /* Màu cam khi hover nút Đóng */
+    color: #ff6347;
 }
 
-/* Đổi màu chữ cho input trong modal */
+
 .modal-content input::placeholder {
-    color: #aaa; /* Màu xám nhạt cho placeholder */
+    color: #aaa;
 }
 
-/* Màu chữ trong các input khi người dùng nhập */
+
 .modal-content input:focus {
-    color: #333333; /* Màu xám tối khi trường input được chọn */
-    border-color: #4CAF50; /* Màu viền khi focus */
+    color: #333333;
+    border-color: #4CAF50;
 }

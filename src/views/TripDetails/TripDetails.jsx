@@ -21,25 +21,27 @@ const TripDetails = ({ data = [] }) => {
                             <th>Total Cost</th>
                             <th>Rating</th>
                             <th>Feedback</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((trip) => (
-                            <tr key={trip.id}>
-                                <td>{trip.id}</td>
-                                <td>{trip.driverName}</td>
-                                <td>{trip.departure}</td>
-                                <td>{trip.destination}</td>
-                                <td>{trip.tripStart}</td>
-                                <td>{trip.tripEnd}</td>
-                                <td>{trip.serviceName}</td>
-                                <td>{Number(trip.totalCost).toFixed(2) || '0.00'}</td>
-                                <td>{trip.rating}</td>
-                                <td>{trip.feedback}</td>
-                                <td>{trip.status}</td>
-                            </tr>
-                        ))}
+                        {Array.isArray(data) ? (
+                            data.map((trip) => (
+                                <tr key={trip.tripId}>
+                                    <td>{trip.tripId}</td>
+                                    <td>{`${trip.driverFirstName} ${trip.driverFamilyName}`}</td>
+                                    <td>{trip.departure}</td>
+                                    <td>{trip.destination}</td>
+                                    <td>{new Date(trip.tripStart).toLocaleString()}</td>
+                                    <td>{new Date(trip.tripEnd).toLocaleString()}</td>
+                                    <td>{trip.serviceName}</td>
+                                    <td>{trip.totalCost.toFixed(2)} USD</td>
+                                    <td>{trip.rating}</td>
+                                    <td>{trip.feedback}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr><td colSpan="10">No valid data available.</td></tr>
+                        )}
                     </tbody>
                 </table>
             )}

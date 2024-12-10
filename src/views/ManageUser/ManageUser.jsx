@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import './ManageUser.css';
-import UserModal from './usernodal.jsx'; // Import modal component
+import UserModal from './usernodal.jsx'; 
 
 const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showModal, setShowModal] = useState(false); 
     const [isEditing, setIsEditing] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
 
     const handleDetailsClick = (user) => {
-        const url = `https://f1d0-14-191-102-163.ngrok-free.app/api/user/account/${user.username}`;
+        const url = `https://ea65-14-191-102-163.ngrok-free.app/api/user/account/${user.username}`;
     
         fetch(url, {
             method: "get",
@@ -28,6 +29,21 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
                 setShowDetailsModal(true);    
             })
             .catch((err) => console.log('Error fetching user details:', err));
+    };
+
+    const handleAddClick = () => {
+        setSelectedUser({
+            username: '',
+            email: '',
+            phoneNumber: '',
+            accountStatus: '',
+            familyName: '',
+            firstName: '',
+            address: '',
+            startDate: '',
+        });
+        setShowModal(true);
+        setIsEditing(false);
     };
 
     const handleCloseModal = () => {
@@ -80,9 +96,30 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
                                     <td>{user.accountStatus}</td>
                                     <td>{user.startDate}</td>
                                     <td>
-                                        <button className="details-button" onClick={() => handleDetailsClick(user)}>Details</button>
-                                        <button className="edit-button" onClick={() => { setSelectedUser(user); setShowModal(true); setIsEditing(true); }}>Edit</button>
-                                        <button className="delete-button" onClick={() => onDelete(user.username)}>Delete</button>
+                                        <button
+                                            className="details-button"
+                                            onClick={() => handleDetailsClick(user)}>
+                                            Details
+                                        </button>
+                                        <button
+                                            className="edit-button"
+                                            onClick={() => {
+                                                setSelectedUser(user);
+                                                setShowModal(true);
+                                                setIsEditing(true);
+                                            }}>
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => onDelete(user.username)}>
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="add-button"
+                                            onClick={handleAddClick}>
+                                            Add
+                                        </button>
                                     </td>
                                 </tr>
                             ))
@@ -104,7 +141,6 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
                 />
             )}
 
-            {/* Details Modal */}
             {showDetailsModal && selectedUser && (
                 <div className="modal">
                     <div className="modal-content">
@@ -118,7 +154,6 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
                         <p><strong>Address:</strong> {selectedUser.address}</p>
                         <p><strong>Start Date:</strong> {selectedUser.startDate}</p>
 
-                        {/* Display details based on user role */}
                         {selectedUser.totalTrips !== undefined ? (
                             <>
                                 <p><strong>Total Trips:</strong> {selectedUser.totalTrips}</p>

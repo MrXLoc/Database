@@ -1,5 +1,5 @@
 import React from 'react';
-import './usermodal.css'; // Import CSS file
+import './usermodal.css'; 
 const UserModal = ({ user, isEditing, onClose, onSave, onInputChange }) => {
     return (
         <div className="modal">
@@ -62,7 +62,6 @@ const UserModal = ({ user, isEditing, onClose, onSave, onInputChange }) => {
                     placeholder="Start Date"
                 />
 
-                {/* Conditional Inputs based on Role */}
                 {user.totalTrips !== undefined ? (
                     <>
                         <input

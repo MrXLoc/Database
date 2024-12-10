@@ -1,60 +1,57 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import TripDetails from '../../../views/TripDetails/TripDetails';
-import axios from 'axios';
-
-
-const mockTrips = [
-    {
-        id: 1,
-        driverName: 'Nguyen Van A',
-        departure: '259 Ly THuong Kiet, Quan 10',
-        destination: '167 Tan Lap, Thu Duc',
-        tripStart: '8/12/2024 11:30:29',
-        tripEnd: '8/12/2024 12:21:15',
-        serviceName: 'Standard',
-        totalCost: '320.000 VND',
-        rating: 5,
-        feedback: 'Excellent',
-        status: 'Completed',
-    },
-    {
-        id: 2,
-        driverName: 'Nguyen Van B',
-        departure: '259 Ly THuong Kiet, Quan 10',
-        destination: '167 Tan Lap, Thu Duc',
-        tripStart: '8/12/2024 11:30:29',
-        tripEnd: '8/12/2024 12:21:15',
-        serviceName: 'Standard',
-        totalCost: '320.000 VND',
-        rating: 5,
-        feedback: 'A bit late',
-        status: 'Completed',
-    },
-    {
-        id: 3,
-        driverName: 'Nguyen Van C',
-        departure: '259 Ly THuong Kiet, Quan 10',
-        destination: '167 Tan Lap, Thu Duc',
-        tripStart: '8/12/2024 11:30:29',
-        tripEnd: '8/12/2024 12:21:15',
-        serviceName: 'Premium',
-        totalCost: '370.000 VND',
-        rating: 4,
-        feedback: 'Excellent',
-        status: 'Completed',
-    },
-];
-
 
 const TripDetailsPage = () => {
+    const { username } = useParams();
     const [trips, setTrips] = useState([]);
+    const [inputUsername, setInputUsername] = useState(username || ''); 
+    const navigate = useNavigate();
 
     useEffect(() => {
-        
-        setTrips(mockTrips);
-    }, []);
+        const fetchTrips = async () => {
+            if (!username) return; 
+            try {
+                const response = await fetch(`https://ea65-14-191-102-163.ngrok-free.app/trips/${username}`, {
+                    method: 'GET',
+                    headers: new Headers({
+                        'ngrok-skip-browser-warning': '69420',
+                    }),
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setTrips(data);
+            } catch (error) {
+                console.error('Error fetching trip details:', error);
+            }
+        };
 
-    return <TripDetails data={trips} />;
+        fetchTrips();
+    }, [username]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (inputUsername.trim()) {
+            navigate(`/trips/${inputUsername}`); 
+        }
+    };
+
+    return (
+        <div className="trip-details-page">
+            <form onSubmit={handleSubmit} className="search-form">
+                <input
+                    type="text"
+                    value={inputUsername}
+                    onChange={(e) => setInputUsername(e.target.value)}
+                    placeholder="Enter Username"
+                />
+                <button type="submit">Submit</button>
+            </form>
+            <TripDetails data={trips} />
+        </div>
+    );
 };
 
 export default TripDetailsPage;
