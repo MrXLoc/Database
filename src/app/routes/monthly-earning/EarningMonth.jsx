@@ -20,7 +20,7 @@ const EarnMonthPage = () => {
 
         try {
             const response = await fetch(
-                `https://e921-14-241-225-130.ngrok-free.app/calculate-earnings?driverId=${driverId}&month=${month}`,
+                `https://a4e8-125-235-127-6.ngrok-free.app/calculate-earnings?driverId=${driverId}&month=${month}`,
                 {
                     method: 'GET',
                     headers: new Headers({

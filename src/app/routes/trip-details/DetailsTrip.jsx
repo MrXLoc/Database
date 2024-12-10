@@ -12,7 +12,7 @@ const TripDetailsPage = () => {
         const fetchTrips = async () => {
             if (!username) return; 
             try {
-                const response = await fetch(`https://e921-14-241-225-130.ngrok-free.app/trips/${username}`, {
+                const response = await fetch(`https://a4e8-125-235-127-6.ngrok-free.app/trips/${username}`, {
                     method: 'GET',
                     headers: new Headers({
                         'ngrok-skip-browser-warning': '69420',

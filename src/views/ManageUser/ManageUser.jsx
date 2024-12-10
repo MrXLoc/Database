@@ -9,7 +9,7 @@ const ManageUser = ({ data = [], onAdd, onEdit, onDelete }) => {
     const [showDetailsModal, setShowDetailsModal] = useState(false);
 
     const handleDetailsClick = (user) => {
-        const url = `https://e921-14-241-225-130.ngrok-free.app/api/user/account/${user.username}`;
+        const url = `https://a4e8-125-235-127-6.ngrok-free.app/api/user/account/${user.username}`;
 
         fetch(url, {
             method: "get",
